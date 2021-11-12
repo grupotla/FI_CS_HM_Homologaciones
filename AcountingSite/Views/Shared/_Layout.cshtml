@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="~/Content/Index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.617/styles/kendo.default-v2.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2020.2.617/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.2.617/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            @*<center>
+                    <p>&copy; @DateTime.Now.Year - GRUPO TLA </p>
+                </center>*@
+        </footer>
+    </div>
+    <script src="~/JS/Menu.js"></script>
+    <script src="~/JS/Acount_Hom_Tipo_Doc.js"></script>
+    <script src="~/JS/Acount_Hom_Cuentas.js"></script>
+    <script src="~/JS/Catalogos_Hom_Calls.js"></script>
+    @*<script src="~/JS/Int_Saldos_Diarios.js"></script>*@
+    <script src="~/JS/Int_Auditoria.js"></script>
+    @*<script src="~/JS/Int_CXC.js"></script>*@
+    <script src="~/JS/Int_Ingresos_CXC.js"></script>
+    <script src="~/Content/sweetalert.min.js"></script>
+
+</body>
+</html>

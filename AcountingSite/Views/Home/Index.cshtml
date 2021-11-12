@@ -1,0 +1,1040 @@
+﻿
+<center>
+    <!--
+    <center style="margin-right: 300px;border-left-style: solid;margin-left: 300px;border-left-width: 0px;padding-left: 10px;padding-right: 10px;">
+       -->
+    <center>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <input type="hidden" id="user_carrousel" name="user" value="@(ViewBag.user)" />
+        <input type="hidden" id="user_rol" name="user_rol" value="@(ViewBag.rol_user)" />
+
+        <div class="navbar">
+            <a id="inicio">Inicio</a>
+
+            <div class="dropdown" id="HomAdmin">
+                <button class="dropbtn">
+                    Admin
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a id="HomUsuarios" style="display:none">Admin de Usuarios</a>
+
+               
+                    <a id="HomCategorias" style="display:none">Admin de Categorias</a>
+                    <a id="HomCatalogos" style="display:none">Admin de Catalogos</a>
+                    <a id="HomCentroCosto" style="display:none">Admin de Centro Costo</a>
+
+           
+                    <a id="HomQuerys" style="display:none">Admin de Querys</a>
+                    <a id="HomFiltros" style="display:none">Admin de Filtros</a>
+                    <a id="HomPaises" style="display:none">Admin de Paises</a>
+                    <a id="HomEmpresas" style="display:none">Admin de Empresas</a>
+
+            
+                    <a id="HomMonedas" style="display:none">TEST DB CS</a>
+
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">
+                    Homologaciones
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a id="HomHomologaciones" style="display:none">Operaciones</a>
+                    <a id="HomHomologaciones2" style="display:none">Consulta</a>
+                </div>
+            </div>
+            <!--
+        <a id="ayuda">Ayuda</a>
+            -->
+        </div>
+
+    </center>
+    
+    
+    
+    <center>
+        <div id="inicioM">
+            <h3>Inicio</h3>
+            <img src="~/Content/tla.png" width="350" height="400" />
+        </div>
+
+        <div id="HomTipoDocM">
+            <br />
+            <h3>Homologacion de Tipo de Documento</h3>
+            <br />
+            <div id="example">
+                <div id="gridHomTipoDocAll"></div>
+            </div>
+        </div>
+        <div id="HomCuentasContableM">
+            <h3>Homologacion de Cuentas Contables</h3>
+            <br />
+            <div id="gridHomCuentasContableAll"></div>
+        </div>
+        <div id="SaldosDiariosM">
+            <h3>Saldos diarios</h3>
+
+            <table class="egt" align="center">
+
+                <tr>
+
+                    <td align="center"><h4>Fecha Inicio</h4></td>
+
+                    <td align="center"><h4>Fecha Fin</h4></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <input id="datepickerstar" style="width: 100%;" />
+
+                    </td>
+
+                    <td>
+                        <input id="datepickerend" style="width: 100%;" />
+                    </td>
+
+                    <td align="center"> <button id="btnAplicar" style=" background-color: #044677 !important ; color: white ;">Aplicar</button></td>
+                </tr>
+
+            </table>
+
+            <div id="gridSaldosDiariosAll"></div>
+        </div>
+        <div id="CXCM">
+            <h3>CXC</h3>
+            <br />
+            <table class="egt" align="center">
+
+                <tr>
+
+                    <td align="center"><h4>Fecha Inicio</h4></td>
+
+                    <td align="center"><h4>Fecha Fin</h4></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <input id="datepickerstarCXC" style="width: 100%;" />
+
+                    </td>
+
+                    <td>
+                        <input id="datepickerendCXC" style="width: 100%;" />
+                    </td>
+
+                    <td align="center"> <button id="btnAplicarCXC" style=" background-color: #044677 !important ; color: white ;">Aplicar</button></td>
+
+
+                </tr>
+
+            </table>
+            <div id="gridCXCAll"></div>
+        </div>
+        <div id="IngresosCXCM">
+            <h3>Ingresos y CXC</h3>
+            <br />
+            <table class="egt" align="center">
+
+                <tr>
+
+                    <td align="center"><h4>Fecha Inicio</h4></td>
+
+                    <td align="center"><h4>Fecha Fin</h4></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <input id="datepickerstaringresos" style="width: 100%;" />
+
+                    </td>
+
+                    <td>
+                        <input id="datepickerendingresos" style="width: 100%;" />
+                    </td>
+
+                    <td align="center"> <button id="btnAplicaringresos" style=" background-color: #044677 !important ; color: white ;">Aplicar</button></td>
+
+
+                </tr>
+
+            </table>
+            <div id="gridingresosAll"></div>
+        </div>
+        <div id="AuditoriaM">
+            <h3>Auditoria</h3>
+            <br />
+            <div id="gridAuditoriaAll"></div>
+        </div>
+
+
+        <script>
+
+            function SetRol(rol, admin) {
+
+                var new_rol = "1";
+                var msg = "";
+
+                try {
+                    new_rol = rol.substring(0, 1);
+                } catch (err) {
+                    msg = err.message;
+                }
+
+    
+                switch (new_rol) {
+
+                    case "1": // consulta                      
+                        $("#HomHomologaciones2").show();
+                        break;
+
+                    case "2": // admin
+                        $("#HomHomologaciones").show();
+                        $("#HomHomologaciones2").show();
+                        $("#HomCentroCosto").show();
+                        break;
+
+                    case "3": // soporte
+
+                        $("#HomCatalogos").show();
+                        $("#HomPaises").show();
+                        $("#HomEmpresas").show();
+                        $("#HomRubros").show();
+                        $("#HomCentroCosto").show();
+
+                        $("#HomMonedas").show();
+                        
+                        $("#HomHomologaciones").show();
+                        $("#HomHomologaciones2").show();
+
+                        $("#TbGuardar").show();
+                        $("#TbNuevo").show();
+                        $("#TbDelete").show();
+                        $("#TbAsociar").show();
+
+                        $("#IERPHM_CHK").show();
+                        $("#IERPHM_LABEL").show();
+
+                        $("#IERPM_CHK").show();
+                        $("#IERPM_LABEL").show();
+
+                        $("#HomAdmin").show();                        
+                    
+                        break;
+                    
+                }
+
+                if (admin == "1") {
+                    $("#HomUsuarios").show();
+                    $("#HomMonedas").show();
+
+                    $("#HomQuerys").show();
+                    $("#HomFiltros").show();
+                }
+            }
+
+            function RolUsers() {
+
+
+                //if ($("#user_rol").val() == "" || $("#user_carrousel").val() == "HMECKLER") {
+
+                var user_carrousel = document.getElementById('user_carrousel').value;
+
+                Catalogos_Calls.GetRolUser(user_carrousel);
+
+                //}
+
+
+
+
+            }
+
+            function CleanCatalogos() {
+
+                //if (document.getElementById('IERP_ID').value == "")
+                //return false;
+
+                document.getElementById('IERP_ID').value = '';
+
+                if ($("#HomCatalogosLabel").html() != "ADMIN FILTROS")  //este dato no se borra
+                    if (document.getElementById('IERP_TITULO'))
+                        document.getElementById('IERP_TITULO').value = '';
+
+                if (document.getElementById('IERP_CODIGO'))
+                    document.getElementById('IERP_CODIGO').value = '';
+
+                document.getElementById('IERPS_SEC').value = '';
+
+                if ($("#HomCatalogosLabel").html() != "ADMIN CATEGORIAS" && $("#HomCatalogosLabel").html() != "ADMIN QUERYS") { //este dato no se borra
+                    if (document.getElementById('IERP_ERP_CODIGO'))
+                        document.getElementById('IERP_ERP_CODIGO').value = '';
+                }
+
+                if (document.getElementById('IERP_CAMPO_PROGRA'))
+                    document.getElementById('IERP_CAMPO_PROGRA').value = '';
+
+                if (document.getElementById('IERP_ORDEN'))
+                    document.getElementById('IERP_ORDEN').value = '';
+
+                if (document.getElementById('IERP_SQL'))
+                    document.getElementById('IERP_SQL').value = '';
+
+                if (document.getElementById('IERP_OPERADOR'))
+                    document.getElementById('IERP_OPERADOR').value = '';
+
+                $("#TbLoader").val("");
+            }
+
+
+            function CleanHomologaciones() {
+
+                $("#IERPHC_ID").html('');
+                $("#IERPHP_ID").html('');
+                //$("#IERPHE_ID").html('');
+                $("#IERPH_NOMBRE").html('');
+                $("#IERPH_NIT").html('');
+                $("#TbExcel").hide();
+                $("#cate_cs_id").val("");
+                $("#cate_cs_ds").val("");
+                $("#cate_ex_id").val("");
+                $("#cate_ex_ds").val("");
+                $("#IERPM_SQL_CS").val("");
+
+            }
+
+
+            function CleanHomologaciones2() {
+
+                $("#IERPHC_ID2").val('');
+                $("#IERPHP_ID2").val('');
+                $("#IERPHE_ID2").val('');
+                $("#IERPH_NOMBRE2").val('');
+                $("#IERPH_NIT2").val('');
+            }
+
+
+            function CheckBoxClicked(e) { //solo permite que un checkbox este verdadero
+
+                if ($(e).prop("checked") == true) { //si es checked limpia todos los demas
+
+                    if ($(e).attr("name") == "CS[]") {
+                        $('[name="CS[]"]').each(function () {
+
+                            if ($(this).prop("checked") == true && $(this).prop("disabled") == false)
+                                $(this).prop('checked', false);
+
+                        });
+                    }
+
+                    if ($(e).attr("name") == "EX[]") {
+                        $('[name="EX[]"]').each(function () {
+                            if ($(this).prop("checked") == true && $(this).prop("disabled") == false)
+                                $(this).prop('checked', false);
+                        });
+                    }
+                    $(e).prop('checked', true);
+                }
+            }
+
+            function GridGetId(e) { //obtiene el id del checkbox marcado
+
+                var id = "-1";
+                var name = "";
+                var value = "";
+                var nit = "";
+                var row;
+
+                if ($(e).prop("checked") == true && $(e).prop("disabled") == false) {
+                    value = $(e).val();
+                    row = $(e).closest("tr");
+                    id = $(row).find("td:eq(1)").text();
+                    name = $(row).find("td:eq(3)").text();
+                    if ($(row).find("td:eq(7)"))
+                        nit = $(row).find("td:eq(7)").text();
+                }
+
+                var data = {
+                    'id': id,
+                    'name': name,
+                    'value': value,
+                    'row': row,
+                    'nit': nit
+                };
+
+                return data;
+            }
+
+            function AsociarRegistros(origen) {
+
+
+                if ($("#TbLoader").val() == '1')
+                    return false;
+
+                var CDID = "-1", EXID = "-1";
+                var CDIDStr = "", EXIDStr = "";
+
+                var IERPH_ID = "";
+                var NIT = "";
+
+                var CSrow;
+                var EXrow;
+
+                $('[name="CS[]"]').each(function () {
+                    if (CDID == "-1") {
+                        var data = GridGetId(this);
+                        CDID = data.id;
+                        CDIDStr = data.name;
+                        IERPH_ID = data.value;
+                        CSrow = data.row;
+                    }
+                });
+
+                $('[name="EX[]"]').each(function () {
+                    if (EXID == "-1") {
+                        var data = GridGetId(this);
+                        EXID = data.id;
+                        EXIDStr = data.name;
+                        IERPH_ID = data.value;
+                        NIT = data.nit;
+                        EXrow = data.row;
+                    }
+                });
+
+
+                if (CDID != "-1" && CDID != "") {
+
+                    if (EXID != "-1" && EXID != "") {
+
+                        var data = {
+                            //envia los datos de backup 2
+                            'OPE1': 'INS',
+                            'IERPH_STATUS': '1',
+                            'IERPHM_ID': document.getElementById('IERPHM_ID2').value,
+                            'IERPHM_DES': $("#IERPHM_ID option:selected").text(),
+                            'IERPHC_ID': document.getElementById('IERPHC_ID2').value,
+                            'IERPHP_ID': document.getElementById('IERPHP_ID2').value,
+                            'IERPHE_ID': document.getElementById('IERPHE_ID2').value,
+                            'IERPH_ID': IERPH_ID, // CHECKBOX VALUE
+                            'CDID': CDID,
+                            'CDIDStr': CDIDStr,
+                            'EXID': EXID,
+                            'NIT': NIT,
+                            'EXIDStr': EXIDStr,
+                            'usuario': document.getElementById('user_carrousel').value, // $("#user_carrousel").val(),
+                            'IERPH_TIPO_MONEDA': document.getElementById('IERPH_TIPO_MONEDA') ? document.getElementById('IERPH_TIPO_MONEDA').value : '',
+                        };
+
+                        Catalogos_Calls.HomHomologacionAsociar(data, CSrow, EXrow);
+
+                    } else {
+
+                        if (origen == 0) {
+
+                            swal({
+                                icon: "error",
+                                text: EXID == "" ? "El registro seleccionado, es invalido" : "No ha seleccionado registro de ERP",
+                                button: "Aceptar"
+                            })
+
+                        }
+
+                    }
+
+                } else {
+
+                    if (origen == 0) {
+
+                        swal({
+                            icon: "error",
+                            text: CDID == "" ? "El registro seleccionado, es invalido" : "No ha seleccionado registro de OPERATIVO",
+                            button: "Aceptar"
+                        })
+                    }
+                }
+            }
+
+
+
+            function Consultar(nit, user, date, status, IERPH_CODIGO, IERPH_ERP_CODIGO, IERPH_ACTIVO, IERPH_NOMBRE, IERPH_ERP_NOMBRE) {
+
+                var dato = "";
+
+                if (IERPH_CODIGO != "")
+                    dato += "CS_CODIGO : " + IERPH_CODIGO + "\n\r";
+
+                if (IERPH_NOMBRE != "")
+                    dato += "CS_NOMBRE : " + IERPH_NOMBRE + "\n\r";
+
+                if (IERPH_ERP_CODIGO != "")
+                    dato += "ERP_CODIGO : " + IERPH_ERP_CODIGO + "\n\r";
+
+                if (IERPH_ERP_NOMBRE != "")
+                    dato += "ERP_NOMBRE : " + IERPH_ERP_NOMBRE + "\n\r";
+
+                if (IERPH_ACTIVO != "")
+                    dato += "ACTIVO : " + (IERPH_ACTIVO == "S" ? "Si" : (IERPH_ACTIVO == "N" ? "No" : "Consulta")) + "\n\r";
+
+                if (user != "")
+                    dato += "User : " + user + "\n\r";
+
+                if (date != "")
+                    dato += "Date : " + date + "\n\r";
+
+                if (status != "")
+                    dato += "Status : " + status + "\n\r";
+
+                if (nit != "")
+                    dato += "CodTributario : " + nit + "\n\r";
+
+                if (dato == "")
+                    dato = "No hay datos adicionales.";
+
+                swal({
+                    icon: "info",
+                    text: dato,
+                    button: "Aceptar"
+                })
+            }
+
+
+            function OnChangeModulo() {
+
+                var IERP_ERP_CODIGO = "";
+
+                //var IERPM_ID = $("#IERPM_ID").val();
+
+                var HomCatalogosLabel = $("#HomCatalogosLabel").html();
+
+                var IERPM_ID = $("#IERPM_ID") ? $("#IERPM_ID").val() : "";
+
+                var IERPE_ID = $("#IERPE_ID") ? $("#IERPE_ID").val() : "";
+
+
+                switch (HomCatalogosLabel) {
+
+                    case "ADMIN CATEGORIAS":
+                    case "ADMIN QUERYS":
+
+                        if ($("#IERP_ERP_CODIGO option:selected").text() != "Seleccione")
+                            IERP_ERP_CODIGO = $("#IERP_ERP_CODIGO option:selected").text();
+
+                        break;
+
+                    case "ADMIN FILTROS":
+
+                        if ($("#IERP_TITULO").val() != "Seleccione")
+                            IERP_ERP_CODIGO = $("#IERP_TITULO").val();
+
+                        break;
+
+                    case "ADMIN PAISES":
+
+                        if (IERPM_ID != "")
+
+                            if (IERPE_ID == "") {
+
+                                $("#IERPM_ID").val("");
+
+                                swal({
+                                    icon: "info",
+                                    text: "Debe seleccionar Empresa antes del Modulo",
+                                    button: "Aceptar"
+                                });
+
+                                return false;
+
+                            }
+
+                        break;
+
+
+                    case "ADMIN USUARIOS":
+
+                        if (IERPM_ID != "")
+
+                            if (IERPE_ID == "") {
+
+                                $("#IERPM_ID").val("");
+
+                                swal({
+                                    icon: "info",
+                                    text: "Debe seleccionar Empresa antes del Modulo",
+                                    button: "Aceptar"
+                                });
+
+                                return false;
+
+                            }
+
+                        break;
+                }
+
+
+                CleanCatalogos();
+
+                var user_rol = document.getElementById('user_rol').value;
+
+
+                var data = {
+                    'IERPM_ID': IERPM_ID,
+                    'IERP_OPCION': HomCatalogosLabel,
+                    'IERPM_DES': $("#IERPM_ID option:selected").text(),
+                    'IERP_CHK': $("#IERPM_CHK").prop("checked") ? '1' : '0',
+                    'IERP_ERP_CODIGO': IERP_ERP_CODIGO,
+                    'IERPC_ROL': user_rol,
+                    'IERPHE_ID': document.getElementById('IERPE_ID') ? document.getElementById('IERPE_ID').value : "",
+                    'usuario': document.getElementById('user_carrousel').value, 
+                };
+
+                if (IERPM_ID == '') {
+
+                    $("#gridHomCatalogosAlls").html("");
+
+                    if ($("#HomCatalogosLabel").html() == "ADMIN CATALOGOS") {
+                        $("#IERP_CODIGO_HTML").html();
+                        $("#IERP_ERP_CODIGO_HTML").html();
+                    }
+
+                } else
+                    Catalogos_Calls.Get_IB_CATALOGOS(data);
+
+            }
+
+
+            function CategoriasDescripcion() {
+
+                if ($("#HomCatalogosLabel").html() == "ADMIN CATALOGOS") {
+
+                    $("#IERP_TITULO").val($("#IERP_CODIGO option:selected").text() + " - " + $("#IERP_ERP_CODIGO option:selected").text())
+                }
+
+                if ($("#HomCatalogosLabel").html() == "ADMIN CATEGORIAS" || $("#HomCatalogosLabel").html() == "ADMIN QUERYS" || $("#HomCatalogosLabel").html() == "ADMIN FILTROS") {
+
+                    if ($("#IERP_ERP_CODIGO_CHK").prop("checked") == true || $("#HomCatalogosLabel").html() == "ADMIN FILTROS")
+                        OnChangeModulo();
+                }
+            }
+
+            function HomologacionesCombos(e) {
+
+                $("#IERPH_TIPO_MONEDA_HTML").hide(); //2021-06-08
+
+                $("#gridHomHomologaciones").html('');
+                $("#gridHomHomologacionesERP").html('');
+                $("#IERPH_NOMBRE").html('');
+                $("#IERPH_NIT").html('');
+                $("#HomoCS").prop('checked', true);
+                $("#HomoERP").prop('checked', true);
+
+
+                var IERPHM_ID = document.getElementById('IERPHM_ID').value;
+
+                var IERPHE_ID = document.getElementById('IERPHE_ID').value; 
+
+                var IERPHC_ID = document.getElementById('IERPHC_ID').value;
+
+                var IERPHP_ID = document.getElementById('IERPHP_ID').value;
+
+                $("#TbExcel").hide();
+                $("#cate_cs_id").val("");
+                $("#cate_cs_ds").val("");
+                $("#cate_ex_id").val("");
+                $("#cate_ex_ds").val("");
+
+                if (IERPHM_ID != "" && IERPHE_ID != "" && IERPHC_ID != "" && IERPHP_ID != "") {
+
+                    $("#TbExcel").show();
+
+                    Catalogos_Calls.GetCategoriasIB(IERPHC_ID);
+                }
+
+               
+                if ($("#HomHomologacionesLabel").html() == 'CONSULTA DE HOMOLOGACIONES') {
+
+                    var element = $(e).attr("id");
+
+                    Catalogos_Calls.SubmitCombos();
+
+                }
+
+                if ($("#HomHomologacionesLabel").html() == 'OPERACION DE HOMOLOGACIONES') {
+
+                    var element = $(e).attr("id");
+
+                    var valor = $("#IERPHC_ID").val();
+
+                    var texto = $("#IERPHC_ID option:selected").text().toUpperCase();
+
+                    var p = texto.indexOf("MONEDA");
+
+                    if (valor == "162") { // || p) {
+
+                        $("#IERPH_TIPO_MONEDA_HTML").show(); //2021-06-08
+
+                        Catalogos_Calls.Set_TipoMoneda(); //2021-06-16
+                    }
+                }
+            }
+
+            function openRequestedPopup() {
+
+                var IERPHM_ID = document.getElementById('IERPHM_ID').value;
+                var IERPHE_ID = document.getElementById('IERPHE_ID').value;
+                var IERPHC_ID = document.getElementById('IERPHC_ID').value;
+                var IERPHP_ID = document.getElementById('IERPHP_ID').value;
+
+                if (IERPHM_ID != "" && IERPHE_ID != "" && IERPHC_ID != "" && IERPHP_ID != "") {
+
+                    var cate_cs_id = document.getElementById('cate_cs_id').value;
+                    var cate_cs_ds = document.getElementById('cate_cs_ds').value;
+                    var cate_ex_id = document.getElementById('cate_ex_id').value;
+                    var cate_ex_ds = document.getElementById('cate_ex_ds').value;
+                    
+                    var IERPHM_DES = $("#IERPHM_ID option:selected").text();
+                    var IERPHE_DES = $("#IERPHE_ID option:selected").text();
+                    var IERPHC_DES = $("#IERPHC_ID option:selected").text();
+                    var IERPHP_DES = $("#IERPHP_ID option:selected").text();
+                    var titulo = "MODULO:" + IERPHM_DES + " EMPRESA:" + IERPHE_DES + " PAIS:" + IERPHP_DES;
+
+                    if (IERPHE_DES.split(" - ")[2]) {
+                        IERPHE_ID = IERPHE_DES.split(" - ")[2]; //CRTLA
+                    }
+
+                    var categoria = " CATEGORIAS CS:" + cate_cs_id + " - " + cate_cs_ds + " ERP:" + cate_ex_id + " - " + cate_ex_ds;
+                    var filename = "HM_" + IERPHM_ID + "_" + IERPHE_ID + "_" + IERPHP_ID + "_" + cate_cs_id + "_" + cate_ex_id + ".xlsx";
+                    var query = $("#IERPM_SQL_CS").val();
+
+                    titulo = IERPHM_DES + " " + IERPHE_ID + " " + IERPHP_ID + " " + categoria;
+
+                    query = query.replace("#*m*#", IERPHM_ID);
+                    query = query.replace("#*e*#", IERPHE_ID); 
+                    query = query.replace("#*c1*#", cate_cs_id);
+                    query = query.replace("#*c2*#", cate_ex_id);
+
+                    var params = "sql=" + query + "&titulo=" + titulo + "&categoria=" + categoria + "&server=10.10.1.20&db=master-aimar&filename=" + filename;
+                    params = btoa(unescape(encodeURIComponent(params)));
+
+                    windowFeatures = ""; //"height=10, width=10, menubar=0, resizable=0, scrollbars=0, toolbar=0";
+    
+                    //windowObjectReference = window.open("http://localhost/sql2excel.php?r=" + params, "TLA", windowFeatures);
+                    windowObjectReference = window.open("http://10.10.1.20/tools/sql2excel.php?r=" + params, "TLA", windowFeatures);
+                }
+
+                return false;
+            }
+
+        </script>
+
+        <style>
+            .HeaderFilters {
+                font-size: 12px;
+            }
+
+            .gridHome {
+                width: 49.5%;
+                overflow: auto;
+                display: block-inline;
+                vertical-align: top;
+                float: left;
+            }
+
+            .k-grid {
+                width: 90%;
+                display: inline;
+            }
+
+            .k-color {
+                padding: 9px;
+                font-size: 14px;
+                border-radius: 5px;
+                text-shadow: 1px 1px black;
+                box-shadow: inset 0 0 10px white;
+            }
+
+            .k-blue {
+                color: white;
+                background-color: rgb(4,70,119);
+            }
+
+            .k-red {
+                color: white;
+                background-color: rgb(253,0,0);
+            }
+
+
+            .colored-blue {
+                color: blue;
+            }
+
+            .colored-red {
+                color: red;
+            }
+
+            .colored-green {
+                color: green;
+            }
+
+            .k-icon-64 {
+                font-size: 64px; /* Sets icon size to 64px */
+            }
+
+            .k-icon-32 {
+                font-size: 32px; /* Sets icon size to 64px */
+            }
+        </style>
+
+
+        <input type="hidden" id="TbLoader" value="" />
+
+
+        <!--  CATALOGOS -->
+
+        <div id="HomCatalogosMenu" data-role="grid" class="k-grid k-widget k-grid-display-block" style="width:100%">
+
+            <h3 id="HomCatalogosLabel"></h3>
+
+            <div class="k-grid-header">
+                <div class="k-grid-header-wrap k-auto-scrollable">
+
+                    <form id="Form_IB_CATALOGOS">
+
+                        <input id="IERP_ID" type="hidden" />
+
+                        <input id="IERPS_SEC" type="hidden" />
+
+                        <table role="grid">
+                            <colgroup>
+                                <col style="width:70px" id="IERPE_ID_COL">
+                                <col style="width:70px">
+                                <col style="width:110px" id="IERP_TITULO_COL">
+                                <col style="width:90px">
+                                <col style="width:90px" id="IERP_ERP_CODIGO_TITLE1">
+                                <col style="width:40px">
+                                <col style="width:40px">
+                                <col style="width:40px">
+                            </colgroup>
+
+                            <thead role="rowgroup">
+                                <tr role="row">
+                                    <th scope="col" class="k-header" id="IERPE_ID_TITLE">Empresa</th>
+                                    <th scope="col" class="k-header">Modulos <span style="float:right"><input id="IERPM_CHK" type="checkbox" /> <label for="IERPM_CHK" id="IERPM_LABEL">Bitacora</label></span></th>
+                                    <th scope="col" class="k-header" id="IERP_TITULO_TITLE">Titulo del Catalogo</th>
+                                    <th scope="col" class="k-header" id="IERP_CODIGO_TITLE"></th>
+                                    <th scope="col" class="k-header" id="IERP_ERP_CODIGO_TITLE"></th>
+                                    <th scope="col" class="k-header">       </th>
+                                    <th scope="col" class="k-header">       </th>
+                                    <th scope="col" class="k-header">        </th>
+                                </tr>
+                                <tr role="row">
+                                    <th id="IERPE_ID_HTML">
+                                        <!-- esta columna solo la utiliza ADMIN PAISES -->
+                                        <select id=IERPE_ID required style="width:100%" class=HeaderFilters onchange=CategoriasDescripcion();></select>
+                                    </th>
+                                    <th>
+                                        <select id=IERPM_ID required style="width:100%"></select>
+                                    </th>
+                                    <th id="IERP_TITULO_HTML">
+                                        <input id="IERP_TITULO" type="text" size="25" maxlength="60" required autocomplete="on" class="HeaderFilters" />
+                                    </th>
+                                    <th id="IERP_CODIGO_HTML">
+                                        <input id="IERP_CODIGO" type="text" size="25" maxlength="50" required autocomplete="on" class="HeaderFilters" />
+                                    </th>
+                                    <th id="IERP_ERP_CODIGO_HTML">
+                                        <input id="IERP_ERP_CODIGO" type="text" size="25" maxlength="50" required autocomplete="on" class="HeaderFilters" />
+                                    </th>
+                                    <th align="center">
+                                        <button id="TbGuardar" title="GUARDAR" onclick="">
+                                            <span class="k-icon k-i-save colored-blue"></span>
+                                        </button>
+                                    </th>
+                                    <th align="center">
+                                        <button id="TbNuevo" title="NUEVO" onclick="">
+                                            <span class="k-icon k-i-file-add colored-blue"></span>
+                                        </button>
+                                    </th>
+                                    <th align="center">
+                                        <button id="TbDelete" title="BORRAR" onclick="">
+                                            <span class="k-icon k-i-trash colored-red"></span>
+                                        </button>
+                                    </th>
+                                </tr>
+                                <tr role="row" id="IERP_SQL_HTML">
+                                </tr>
+
+                            </thead>
+                        </table>
+
+
+                    </form>
+
+                </div>
+            </div>
+
+
+
+            <div id="gridHomCatalogosAlls" style="width:100%;padding:0px;"></div>
+
+        </div>
+
+
+        <div id="window2"></div>
+
+        <script type="text/x-kendo-template" id="windowTemplate">
+
+            <table style="border:1px solid gray" width=100%>
+
+            <tr><th>Homologado</th><td>#=IERPH_STATUS_DES#</td></tr>
+
+            <tr><th>CS&nbsp;CODIGO</th><td colspan=3>#=IERPH_CODIGO2# - #=IERPH_NOMBRE#</td></tr>
+            <tr><th>EX&nbsp;CODIGO</th><td colspan=3>#=IERPH_ERP_CODIGO2# - #=IERPH_ERP_NOMBRE#</td></tr>
+
+            <tr><th>Modulo</th><td>#=IERPM_ID#</td></tr>
+            <tr><th>Empresa</th><td>#=IERPE_ID#</td><th>Pais</th><td>#=IERPP_ID#</td></tr>
+            <tr><th>Catalogo</th><td colspan=3>#=IERPH_CAT# - #=IERPH_CAT_DES#</td></tr>
+
+            <tr><th>Estado</th><td>#=IERPH_ACTIVO_DES#</td></tr>
+
+            <tr><th>Usuario</th><td>#=IERPH_USER#</td><th>Fecha</th><td colspan=2>#=IERPH_DATE#</td></tr>
+
+            <tr><th>Cod&nbsp;Tributario</th><td>#=IERPH_NIT#</td></tr>
+
+            </table>
+            <br>
+
+            <button class="k-button" id="noButton"> OK </button>
+        </script>
+
+        <!--
+    <button class="k-button" id="yesButton">Yes</button>
+    <button class="k-button" id="noButton"> No</button>
+    -->
+
+        <!--  HOMOLOGACIONES -->
+
+        <div id="HomHomologacionesMenu" data-role="grid" class="k-grid k-widget k-grid-display-block" style="width:100%">
+
+            <input type="hidden" id="IERPHM_ID2" />
+            <input type="hidden" id="IERPHC_ID2" />
+            <input type="hidden" id="IERPHP_ID2" />
+            <input type="hidden" id="IERPHE_ID2" />
+            <input type="hidden" id="IERPH_NOMBRE2" />
+            <input type="hidden" id="IERPH_NIT2" />
+
+            <input type="hidden" id="cate_cs_id" />
+            <input type="hidden" id="cate_cs_ds" />
+            <input type="hidden" id="cate_ex_id" />
+            <input type="hidden" id="cate_ex_ds" />
+            <input type="hidden" id="IERPM_SQL_CS" />
+
+            <h3 id=HomHomologacionesLabel>HOMOLOGACIONES</h3>
+
+            <div class="k-grid-header">
+                <div class="k-grid-header-wrap k-auto-scrollable">
+
+                    <form id="Form_IB_HOMOLOGACIONES" name="Form_IB_HOMOLOGACIONES">
+
+
+                        <table role="grid">
+
+                            <colgroup>
+                                <col style="width:80px">
+                                <col style="width:80px">
+                                <col style="width:80px">
+                                <col style="width:80px">
+                                <col style="width:80px">
+                                <col style="width:80px">
+                                <col style="width:15px">
+                                <col style="width:15px">
+                            </colgroup>
+
+                            <thead role="rowgroup">
+                                <tr role="row">
+                                    <th scope="col" class="k-header">Empresa <span style="float:right"><input id="IERPHM_CHK" type="checkbox" /> <label id="IERPHM_LABEL" for="IERPHM_CHK">Bitacora</label></span> </th>
+                                    <th scope="col" class="k-header">Modulo</th>
+                                    <th scope="col" class="k-header">Catalogo</th>
+                                    <th scope="col" class="k-header">Pais</th>
+                                    <th scope="col" class="k-header">Busqueda Operativo <span style="float:right"><input type="checkbox" id="HomoCS" checked title="Incluir en Busqueda Operativo" /></span> </th>
+                                    <th scope="col" class="k-header">Busqueda ERP       <span style="float:right"><input type="checkbox" id="HomoERP" checked title="Incluir en Busqueda ERP" /></span> </th>
+                                    <th scope="col" class="k-header" colspan="2"></th>                      
+                                </tr>
+                                <tr role="row">
+                                    <th valign="top">
+                                        <select id=IERPHE_ID required style="width:100%"></select>
+                                    </th>
+                                    <th valign="top">
+                                        <select id=IERPHM_ID required style="width: 100%"></select>
+                                    </th>
+                                    <th valign="top">
+                                        <select id=IERPHC_ID required style="width: 100%" onchange="HomologacionesCombos(this)"></select>
+                                    </th>
+                                    <th valign="top">
+                                        <select id=IERPHP_ID required style="width: 100%" onchange="HomologacionesCombos(this)"></select>
+                                    </th>
+
+                                    <th valign="top">
+                                        <input id="IERPH_NOMBRE" type="text" style="width: 80%" maxlength="70" required autocomplete="on" class="HeaderFilters" /> <input type="checkbox" title="Omitir Obligatorio" onchange="document.getElementById('IERPH_NOMBRE').required = !this.checked;" />
+
+                                        <div id="IERPH_TIPO_MONEDA_HTML">
+                                            <span class="k-header" style="padding:4px;display:block;margin-top:6px;width:100%">Tipo Moneda</span>
+                                            <select id=IERPH_TIPO_MONEDA style="width:100%" class=HeaderFilters></select>
+                                        </div>
+
+                                    </th>
+                                    <th valign="top">
+                                        <input id="IERPH_NIT" type="text" style="width: 100%" maxlength="70" autocomplete="on" class="HeaderFilters" />
+                                    </th>
+                                    <th valign="top" style="padding-right: 0px; padding-left: 0px; border: 0px">
+                                        <button id="TbBuscar" title="BUSCAR" onclick="">
+                                            <span class="k-icon k-i-zoom colored-blue"></span>
+                                        </button>
+                                    </th>
+
+                                    <th valign="top" style="padding-right: 0px; padding-left: 0px; border: 0px">
+                                        <button id="TbExcel" title="EXCEL" onclick="return openRequestedPopup();" style="display:none">
+                                            <span class="k-icon k-i-file-excel colored-green"></span>
+                                        </button>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                        </table>
+
+
+                    </form>
+
+                </div>
+            </div>
+
+
+
+            <div class="gridHome">
+                <div id="gridHomHomologaciones" style="width:100%;border:0px;">*****</div>
+
+            </div>
+
+            <div class="gridHome">
+                <div id="gridHomHomologacionesERP" style="width:100%;border: 0px;">*****</div>
+
+            </div>
+
+
+
+
+        </div>
+
+
+        <div id="ayudaM">
+            <h3>Ayuda</h3>
+        </div>
+    </center>
+
+</center>
